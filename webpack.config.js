@@ -15,7 +15,7 @@ module.exports = {
       loader: ['babel-loader'],
       query: {
         cacheDirectory: 'babel_cache',
-        presets: ['react', 'es2015']
+        presets: ['es2015', 'react']
       }
     }]/*,
     {
@@ -29,12 +29,12 @@ module.exports = {
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
+    /*new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
       mangle: true,
       sourcemap: true,
       beautify: false,
       dead_code: true
-    })
+    })*/
   ]
 };

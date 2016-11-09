@@ -1,58 +1,50 @@
 // src/components/IndexPage.js
 import React from 'react';
 import Loading from './Loading';
-import Card from './Card';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Bracket from './Bracket';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import Message from 'material-ui/svg-icons/communication/message';
 import {deepOrange500} from 'material-ui/styles/colors';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import { Notification } from 'react-notification';
 
 export default class IndexPage extends React.Component {
-  constructor(props) {
-    this.state = {
-      count: 0
-    };
+  componentDidMount() {
+    setInterval(this.initNotification, 3000);
   }
 
-  showNotification() {
-    ReactMaterialUiNotifications.showNotification({
-      title: 'Title',
-      additionalText: `Some message to be displayed ${this.state.count}`,
-      icon: <Message />,
-    iconBadgeColor: deepOrange500,
-    overflowText: "joe@gmail.com",
-    timestamp: moment().format('h:mm A')
-  })
-  // update notifications count
-  this.setState({
-    count: ++this.state.count
-  })
-}
+  initNotification() {
+    if (Math.random() > .5) {
+      setState({
+        notification: true
+      });
+    }
+    else {
+      setState({
+        notification: false
+      });
+    }
+  }
 
   render() {
     return (
-      <Paper
-        style={styles.paper}
-        zDepth={0}
-      >
-        <FlatButton
-          label="Examples file"
-          primary={true}
-          onTouchTap={this.showNotification}
-        />
-      </Paper>
-    );
-  }
-  render_2() {
-    return (
-      <div className="home">
-        <Card title="NCPPR 4 Fall Bracket">
-          <Bracket />
-          <Loading />
-          <p>This is a test</p>
-        </Card>
-      </div>
+      <Card>
+        <CardTitle title="Volley Ball" subtitle="2017 Inter-Church Volley Ball League Tournament" />
+        <CardText>
+        </CardText>
+        <Bracket />
+        <CardActions>
+          <FlatButton label="Like" />
+          <FlatButton label="Follow" />
+        </CardActions>
+        <Notification
+          isActive={this.props.notification}
+          message='HELLO WORLD'
+          />
+      </Card>
     );
   }
 }

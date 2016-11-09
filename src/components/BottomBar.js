@@ -4,9 +4,11 @@ import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
+import SocialPerson from 'material-ui/svg-icons/action/account-circle';
+import Home from 'material-ui/svg-icons/action/home';
 
-const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
-const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
+const feedsIcon = <Home />;
+const peopleIcon = <SocialPerson />;
 const nearbyIcon = <IconLocationOn />;
 
 export default class BottomBar extends React.Component {
@@ -23,17 +25,17 @@ export default class BottomBar extends React.Component {
       <Paper zDepth={1}>
         <BottomNavigation selectedIndex={this.state.selectedIndex}>
           <BottomNavigationItem
-            label="Recents"
-            icon={recentsIcon}
+            label="Updates"
+            icon={feedsIcon}
             onTouchTap={() => this.select(0)}
           />
           <BottomNavigationItem
-            label="Favorites"
-            icon={favoritesIcon}
+            label="Online"
+            icon={peopleIcon}
             onTouchTap={() => this.select(1)}
           />
           <BottomNavigationItem
-            label="Nearby"
+            label="Map"
             icon={nearbyIcon}
             onTouchTap={() => this.select(2)}
           />

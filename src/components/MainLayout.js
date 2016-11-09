@@ -4,41 +4,68 @@ import { Row, Col } from 'react-bootstrap';
 import Header from './Header';
 import BottomBar from './BottomBar';
 import SideMenuItem from './SideMenuItem';
+import IconButton from 'material-ui/IconButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import Avatar from 'material-ui/Avatar';
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import {lightGreen100} from 'material-ui/styles/colors';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 export default class MainLayout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {open: false};
+    this.glob = {
+        notificationHandler: this.sayHello,
+        updateDrawer: this.updateDrawer
+    };
+  }
+
+  sayHello(text) {
+    alert("whoa there");
+  }
+
+  updateDrawer(status) {
+    if(status) {
+      this.setState({ drawerOpen: status });
+    }
+    else {
+      this.setState({ drawerOpen: !this.state.drawerOpen });
+    }
+  }
+
+  handleToggle() { this.setState({drawerOpen: !this.state.drawerOpen}); }
+
+  handleClose() { this.setState({drawerOpen: false}); }
+
   render() {
     return (
       <MuiThemeProvider>
         <main id="page-wrap" className="main">
-          <AppBar title="Title" iconClassNameRight="muidocs-icon-navigation-expand-more" />
-          <BottomBar />
+          <AppBar
+            title="Buzzer"
+            iconElementRight={<IconButton><MoreVertIcon /></IconButton>}
+            onLeftIconButtonTouchTap={() => this.updateDrawer()} />
+          <BottomBar glob={this.glob}/>
+            <Drawer
+              docked={false}
+              width={200}
+              open={this.state.drawerOpen}
+              onRequestChange={(open) => this.setState({open})}
+              backgroundColor={lightGreen100}
+              >
+              <MenuItem onTouchTap={() => this.handleClose()}>
+                <Avatar size={80} style={{padding: '20px'}}>CE</Avatar>
+              </MenuItem>
+              <MenuItem onTouchTap={() => this.handleClose()}>Profile</MenuItem>
+              <MenuItem onTouchTap={() => this.handleClose()}>My Team</MenuItem>
+            </Drawer>
+            {this.state.drawerOpen}
           <div className="app-content">{this.props.children}</div>
-        </main>
-      </MuiThemeProvider>
-    );
-  }
-  render_old() {
-    return (
-      <MuiThemeProvider>
-        <main id="page-wrap" className="main">
-          <AppBar title="Title" iconClassNameRight="muidocs-icon-navigation-expand-more" />
-          <div className="app-container">
-            <Row>
-              <Col md={12} xs={12}>
-                <Header />
-              </Col>
-            </Row>
-            <footer>
-              <p>
-                Made with <strong>love</strong> and <strong>motivation</strong>.
-              </p>
-            </footer>
-          </div>
-          <BottomBar />
         </main>
       </MuiThemeProvider>
     );
