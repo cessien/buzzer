@@ -1,21 +1,19 @@
 // src/components/MainLayout.js
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { withRouter } from 'react-router';
 import Header from './Header';
 import BottomBar from './BottomBar';
 import SideMenuItem from './SideMenuItem';
 import IconButton from 'material-ui/IconButton';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import Avatar from 'material-ui/Avatar';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {lightGreen100} from 'material-ui/styles/colors';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
 
-export default class MainLayout extends React.Component {
+class MainLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {open: false};
@@ -42,32 +40,36 @@ export default class MainLayout extends React.Component {
 
   handleClose() { this.setState({drawerOpen: false}); }
 
+  handlePage(page) {
+      this.handleClose();
+      this.props.router.push(page);
+  }
+
   render() {
     return (
-      <MuiThemeProvider>
-        <main id="page-wrap" className="main">
-          <AppBar
-            title="Buzzer"
-            iconElementRight={<IconButton><MoreVertIcon /></IconButton>}
-            onLeftIconButtonTouchTap={() => this.updateDrawer()} />
-          <BottomBar glob={this.glob}/>
-            <Drawer
-              docked={false}
-              width={200}
-              open={this.state.drawerOpen}
-              onRequestChange={(open) => this.setState({open})}
-              backgroundColor={lightGreen100}
-              >
-              <MenuItem onTouchTap={() => this.handleClose()}>
-                <Avatar size={80} style={{padding: '20px'}}>CE</Avatar>
-              </MenuItem>
-              <MenuItem onTouchTap={() => this.handleClose()}>Profile</MenuItem>
-              <MenuItem onTouchTap={() => this.handleClose()}>My Team</MenuItem>
-            </Drawer>
-            {this.state.drawerOpen}
-          <div className="app-content">{this.props.children}</div>
-        </main>
-      </MuiThemeProvider>
+      <main id="page-wrap" className="main">
+        <AppBar
+          title="Buzzer"
+          iconElementRight={<IconButton><MoreVertIcon /></IconButton>}
+          onLeftIconButtonTouchTap={() => this.updateDrawer()} />
+        <BottomBar glob={this.glob}/>
+          <Drawer
+            docked={false}
+            width={200}
+            open={this.state.drawerOpen}
+            onRequestChange={(open) => this.setState({open})}
+            backgroundColor={lightGreen100}
+            >
+            <MenuItem onTouchTap={() => this.handleClose()}>
+              <Avatar size={80} style={{padding: '20px'}}>CE</Avatar>
+            </MenuItem>
+            <MenuItem onTouchTap={() => this.handlePage('/test')}>Profile</MenuItem>
+            <MenuItem onTouchTap={() => this.handlePage('/login')}>My Team</MenuItem>
+          </Drawer>
+        <div className="app-content">{this.props.children}</div>
+      </main>
     );
   }
 }
+
+export default withRouter(MainLayout);

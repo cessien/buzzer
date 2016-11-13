@@ -1,3 +1,8 @@
+@font-face {
+    font-family: buzzer;
+    src: url(AlfaSlabOne-Regular.ttf);
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -12,6 +17,7 @@ body.main {
 }
 
 .main, #main {
+  height: 100%;
 }
 
 body,h1,h2,h3,h4,h5 {
@@ -58,6 +64,10 @@ a:hover, a:focus {
 footer {
   text-align: right;
   padding: 30px;
+}
+
+.app-container {
+  height: 100%;
 }
 
 .app-content {
@@ -115,4 +125,28 @@ footer {
   border-radius: 25%;
   margin: 1em auto;
   float: right;
+}
+
+.buzzer-title {
+  font-family: buzzer;
+  color: #f5f5f5;
+  text-align: center;
+  text-shadow: 0 0 4em rgba(0,0,0,.5);
+}
+
+.buzzer-title > * {
+  display: inline-block;
+}
+
+.buzzer-title .ten {
+  font-size: 3.5em;
+  color: #80ecd4;
+}
+
+.buzzer-title .thousand {
+  font-size: 2.1em;
+}
+
+.buzzer-title .pts {
+  font-size: 2.3em;
 }
