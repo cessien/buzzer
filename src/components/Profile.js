@@ -9,6 +9,8 @@ import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
+import { greenA100 } from 'material-ui/styles/colors';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import * as firebase from 'firebase';
 
@@ -16,14 +18,15 @@ class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      errorText: '',
+      errorZipText: '',
       email: '',
-      displayName: ''
+      displayName: '',
+      zip: ''
     };
   }
 
   componentDidMount() {
-    var user = firebase.auth().currentUser;
+    var user = this.user = firebase.auth().currentUser;
     if (user != null) {
       this.setState({
         email: user.email,
@@ -32,23 +35,47 @@ class Profile extends React.Component {
     }
   }
 
-  updateEmail() {
+  updateName(e) {
     this.setState({
-      email: 'cessien88@gmail.com'
+      displayName: e.target.value
+    });
+  }
+
+  updateEmail(e) {
+    this.setState({
+      email: e.target.value
     });
   }
 
   validateZip(event) {
     if (event.target.value.match(/[0-9]{5}/)) {
-      this.setState({ errorText: '' })
+      this.setState({
+        errorText: '',
+        zip: e.target.value
+      });
+
     } else {
-      this.setState({ errorText: 'The zip must be 5 digits: e.g. 00000' })
+      this.setState({
+        errorText: 'The zip must be 5 digits: e.g. 00000',
+        zip: ''
+      })
     }
   }
 
   updateProfile() {
-    user.updateProfile({
+    var that = this;
+
+    this.user.updateProfile({
       displayName: this.state.displayName
+    }).then(function() {
+      that.setState({
+        saveSuccess: true
+      });
+      setTimeout(function(){
+        that.setState({
+          saveSuccess: false
+        });
+      },3000);
     });
   }
 
@@ -67,15 +94,21 @@ class Profile extends React.Component {
             <Avatar size={80} style={{padding: '20px', margin: '20px'}}>CE</Avatar>
             <br />
             <br />
-            <TextField hintText="Full name" underlineShow={false} style={style} value={this.state.displayName}/>
+            <TextField hintText="Full name" underlineShow={false} style={style} value={this.state.displayName} onChange={this.updateName.bind(this)}/>
             <Divider />
-            <TextField hintText="Zip code eg. 00000" underlineShow={false} style={style} errorText= {this.state.errorZipText} onChange={this.validateZip.bind(this)}/>
+            <TextField hintText="Zip code eg. 00000" underlineShow={false} style={style} errorText={this.state.errorZipText} value={this.state.zip || ''} onChange={this.validateZip.bind(this)}/>
             <Divider />
             <DatePicker hintText="Date of birth" underlineShow={false} locale='en-US' style={style}/>
             <Divider />
             <TextField  disabled={true} hintText="Email address" underlineShow={false} style={style} onChange={this.updateEmail} value={this.state.email}/>
             <Divider />
-            <RaisedButton label="Update" primary={true} style={{ margin: '20px' }} onTouchTap={() => this.updateProfile.bind(this)} />
+            <div>
+              <RaisedButton label="Update" primary={true} style={{ margin: '20px' }} onTouchTap={this.updateProfile.bind(this)} />
+              <p style={{
+                color: greenA100,
+                display: this.state.saveSuccess ? 'inline-block' : 'none'
+              }}>Updates saved. <FontIcon className="fa fa-check" style={{color: greenA100}}></FontIcon></p>
+            </div>
           </div>
         </div>
     );
