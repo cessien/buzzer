@@ -10,14 +10,26 @@ import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import * as firebase from 'firebase';
 
 class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       errorText: '',
-      email: ''
+      email: '',
+      displayName: ''
     };
+  }
+
+  componentDidMount() {
+    var user = firebase.auth().currentUser;
+    if (user != null) {
+      this.setState({
+        email: user.email,
+        displayName: user.displayName
+      });
+    }
   }
 
   updateEmail() {
@@ -32,6 +44,12 @@ class Profile extends React.Component {
     } else {
       this.setState({ errorText: 'The zip must be 5 digits: e.g. 00000' })
     }
+  }
+
+  updateProfile() {
+    user.updateProfile({
+      displayName: this.state.displayName
+    });
   }
 
   render() {
@@ -57,7 +75,7 @@ class Profile extends React.Component {
             <Divider />
             <TextField  disabled={true} hintText="Email address" underlineShow={false} style={style} onChange={this.updateEmail} value={this.state.email}/>
             <Divider />
-            <RaisedButton label="Update" primary={true} style={{ margin: '20px' }} onTouchTap={() => this.submitUpdates()} />
+            <RaisedButton label="Update" primary={true} style={{ margin: '20px' }} onTouchTap={() => this.updateProfile.bind(this)} />
           </div>
         </div>
     );
