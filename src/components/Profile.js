@@ -21,16 +21,29 @@ class Profile extends React.Component {
       errorZipText: '',
       email: '',
       displayName: '',
-      zip: ''
+      zip: '',
+      dob: new Date()
     };
   }
 
   componentDidMount() {
+    var that = this;
+
+    this.database = firebase.database();
     var user = this.user = firebase.auth().currentUser;
     if (user != null) {
-      this.setState({
-        email: user.email,
-        displayName: user.displayName
+      this.database.ref('users/' + user.uid).on('value', function(snapshot) {
+        var dob, zip;
+        if (snapshot.val()) {
+          dob = snapshot.val().dob;
+          zip = snapshot.val().zip;
+        }
+        that.setState({
+          email: user.email,
+          displayName: user.displayName,
+          dob: dob,
+          zip: zip
+        });
       });
     }
   }
@@ -47,8 +60,14 @@ class Profile extends React.Component {
     });
   }
 
+  updateDOB(e,date) {
+    this.setState({
+      dob: date
+    });
+  }
+
   validateZip(event) {
-    if (event.target.value.match(/[0-9]{5}/)) {
+    if (event.target.value.match(/[0-9]{0,5}/)) {
       this.setState({
         errorText: '',
         zip: e.target.value
@@ -68,6 +87,10 @@ class Profile extends React.Component {
     this.user.updateProfile({
       displayName: this.state.displayName
     }).then(function() {
+      firebase.database().ref('users/' + that.user.uid).set({
+        dob: that.state.dob || '',
+        zip: that.state.zip || null
+      });
       that.setState({
         saveSuccess: true
       });
@@ -96,11 +119,11 @@ class Profile extends React.Component {
             <br />
             <TextField hintText="Full name" underlineShow={false} style={style} value={this.state.displayName} onChange={this.updateName.bind(this)}/>
             <Divider />
-            <TextField hintText="Zip code eg. 00000" underlineShow={false} style={style} errorText={this.state.errorZipText} value={this.state.zip || ''} onChange={this.validateZip.bind(this)}/>
+            <TextField hintText="Zip code eg. 00000" underlineShow={false} style={style} errorText={this.state.errorZipText} value={this.state.zip} onChange={this.validateZip}/>
             <Divider />
-            <DatePicker hintText="Date of birth" underlineShow={false} locale='en-US' style={style}/>
+            <DatePicker hintText="Date of birth" underlineShow={false} locale='en-US' style={style} onChange={this.updateDOB} value={this.state.dob}/>
             <Divider />
-            <TextField  disabled={true} hintText="Email address" underlineShow={false} style={style} onChange={this.updateEmail} value={this.state.email}/>
+            <TextField  disabled={true} hintText="Email address" underlineShow={false} style={style} onChange={this.updateEmail.bind(this)} value={this.state.email}/>
             <Divider />
             <div>
               <RaisedButton label="Update" primary={true} style={{ margin: '20px' }} onTouchTap={this.updateProfile.bind(this)} />

@@ -43003,7 +43003,8 @@
 	      errorZipText: '',
 	      email: '',
 	      displayName: '',
-	      zip: ''
+	      zip: '',
+	      dob: new Date()
 	    };
 	    return _this;
 	  }
@@ -43011,11 +43012,23 @@
 	  _createClass(Profile, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var that = this;
+
+	      this.database = firebase.database();
 	      var user = this.user = firebase.auth().currentUser;
 	      if (user != null) {
-	        this.setState({
-	          email: user.email,
-	          displayName: user.displayName
+	        this.database.ref('users/' + user.uid).on('value', function (snapshot) {
+	          var dob, zip;
+	          if (snapshot.val()) {
+	            dob = snapshot.val().dob;
+	            zip = snapshot.val().zip;
+	          }
+	          that.setState({
+	            email: user.email,
+	            displayName: user.displayName,
+	            dob: dob,
+	            zip: zip
+	          });
 	        });
 	      }
 	    }
@@ -43034,9 +43047,16 @@
 	      });
 	    }
 	  }, {
+	    key: 'updateDOB',
+	    value: function updateDOB(e, date) {
+	      this.setState({
+	        dob: date
+	      });
+	    }
+	  }, {
 	    key: 'validateZip',
 	    value: function validateZip(event) {
-	      if (event.target.value.match(/[0-9]{5}/)) {
+	      if (event.target.value.match(/[0-9]{0,5}/)) {
 	        this.setState({
 	          errorText: '',
 	          zip: e.target.value
@@ -43056,6 +43076,10 @@
 	      this.user.updateProfile({
 	        displayName: this.state.displayName
 	      }).then(function () {
+	        firebase.database().ref('users/' + that.user.uid).set({
+	          dob: that.state.dob || '',
+	          zip: that.state.zip || null
+	        });
 	        that.setState({
 	          saveSuccess: true
 	        });
@@ -43100,11 +43124,11 @@
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(_TextField2.default, { hintText: 'Full name', underlineShow: false, style: style, value: this.state.displayName, onChange: this.updateName.bind(this) }),
 	          _react2.default.createElement(_Divider2.default, null),
-	          _react2.default.createElement(_TextField2.default, { hintText: 'Zip code eg. 00000', underlineShow: false, style: style, errorText: this.state.errorZipText, value: this.state.zip || '', onChange: this.validateZip.bind(this) }),
+	          _react2.default.createElement(_TextField2.default, { hintText: 'Zip code eg. 00000', underlineShow: false, style: style, errorText: this.state.errorZipText, value: this.state.zip, onChange: this.validateZip.bind(this) }),
 	          _react2.default.createElement(_Divider2.default, null),
-	          _react2.default.createElement(_DatePicker2.default, { hintText: 'Date of birth', underlineShow: false, locale: 'en-US', style: style }),
+	          _react2.default.createElement(_DatePicker2.default, { hintText: 'Date of birth', underlineShow: false, locale: 'en-US', style: style, onChange: this.updateDOB.bind(this), value: this.state.dob }),
 	          _react2.default.createElement(_Divider2.default, null),
-	          _react2.default.createElement(_TextField2.default, { disabled: true, hintText: 'Email address', underlineShow: false, style: style, onChange: this.updateEmail, value: this.state.email }),
+	          _react2.default.createElement(_TextField2.default, { disabled: true, hintText: 'Email address', underlineShow: false, style: style, onChange: this.updateEmail.bind(this), value: this.state.email }),
 	          _react2.default.createElement(_Divider2.default, null),
 	          _react2.default.createElement(
 	            'div',
