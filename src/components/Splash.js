@@ -16,7 +16,8 @@ class Splash extends React.Component {
         if (user) {
           self.props.router.push('/home');
         } else {
-          self.props.router.push('/login');
+          //self.props.router.push('/login');
+          self.props.router.push('/signup');
         }
       }, 1000);
     });
@@ -27,7 +28,8 @@ class Splash extends React.Component {
         self.props.router.push('/home');
       } else {
         // Else initiate login
-        self.props.router.push('/login');
+        //self.props.router.push('/login');
+        self.props.router.push('/signup');
       }
     },2000);
   }
