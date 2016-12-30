@@ -74,10 +74,15 @@ Vagrant.configure("2") do |config|
       sudo apt-get install -y git
       sudo apt-get install -y htop
 
+      # Use forever-service to start and stop node in the background
+      sudo npm install -g forever
+      sudo npm install -g forever-service
+
       # Start the node server on 8080
       cd /vagrant
+      sudo forever-service install tenthousandpoints
 
       npm install
-      npm start
+      sudo service tenthousandpoints start
   SHELL
 end
