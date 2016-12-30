@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
-  config.vm.provision :shell, path: "scripts/android_sdk.sh"
+  #config.vm.provision :shell, path: "scripts/android_sdk.sh"
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
@@ -74,10 +74,15 @@ Vagrant.configure("2") do |config|
       sudo apt-get install -y git
       sudo apt-get install -y htop
 
+      # Use forever-service to start and stop node in the background
+      sudo npm install -g forever
+      sudo npm install -g forever-service
+
       # Start the node server on 8080
       cd /vagrant
+      sudo forever-service install tenthousandpoints
 
       npm install
-      npm start
+      sudo service tenthousandpoints start
   SHELL
 end

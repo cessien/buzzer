@@ -4,7 +4,7 @@
   "description": "tournament brackets manager",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js > /var/log/tenthousandpoints_server.log 2>&1"
   },
   "engines": {
     "node": ">=0.10.25"
