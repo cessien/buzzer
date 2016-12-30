@@ -32,9 +32,10 @@ class SignUp extends React.Component {
         <br />
         <br />
         <Card>
-          <CardTitle title="Hello." subtitle="Thank you for your interest" />
+          <CardTitle title="Hello." subtitle="Thank you for signing up!" />
           <CardText>
-            This league is going to be a great opportunity to connect as many people we can through having some fun; Being active, scoring points, and playing some volley ball. Thanks for chatting with us, we hop you'll leave your information below so we can keep in touch in the near future as we put together our first tournament.
+            <p>If you've found this site it means</p>
+            <p>This league is going to be a great opportunity to connect as many people we can through having some fun; Being active, scoring points, and playing some volley ball. Thanks for chatting with us, we hope you'll leave your information below so we can keep in touch in the near future as we put together our first tournament.</p>
           </CardText>
           <Center>
             <TextField
