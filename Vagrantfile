@@ -61,15 +61,20 @@ Vagrant.configure("2") do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
+  #config.vm.provision :shell, path: "scripts/android_sdk.sh"
+
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
+  config.vm.provision :shell, inline: <<-SHELL
       curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash
       sudo apt-get update
       sudo apt-get install -y nodejs
       sudo apt-get install -y npm
+      sudo apt-get install -y git
+      sudo apt-get install -y htop
 
+      # Start the node server on 8080
       cd /vagrant
 
       npm start
