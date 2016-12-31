@@ -87,7 +87,8 @@ Vagrant.configure("2") do |config|
       git clone https://github.com/oren/docker-cordova.git
       cd docker-cordova
       docker build -t cordova .
-      echo "alias cordova='docker run --rm -i -v /vagrant/tenthousandpoints/:/workspace -w /workspace --privileged cordova cordova'" >> $HOME/.bashrc
+      echo "alias cordova='docker run --rm -i -t -v /vagrant/tenthousandpoints/:/workspace -w /workspace --privileged cordova cordova'" >> $HOME/.bashrc
+      echo "alias rake='/vagrant/scripts/rake.pl'" >> $HOME/.bashrc
 
       # Use forever-service to start and stop node in the background
       sudo npm install -g forever
