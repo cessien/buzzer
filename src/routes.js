@@ -10,6 +10,7 @@ import SignUp from './components/SignUp';
 import Thanks from './components/Thanks';
 import Profile from './components/Profile';
 import NotFoundPage from './components/NotFoundPage';
+import ChooseTeam from './components/cSignUp/Team';
 import requireAuth from './utils/authenticated';
 
 const routes = (
@@ -18,6 +19,7 @@ const routes = (
     <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
     <Route path="/signup" component={SignUp} />
+    <Route path="/signup/teams" component={ChooseTeam} />
     <Route path="/thanks" component={Thanks} />
     <Route path="/user/profile" component={Profile} onEnter={requireAuth} />
     <Route path="/home" component={IndexPage} onEnter={requireAuth}/>

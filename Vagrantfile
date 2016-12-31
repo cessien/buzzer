@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -74,6 +74,21 @@ Vagrant.configure("2") do |config|
       sudo apt-get install -y git
       sudo apt-get install -y htop
 
+      # Docker, which will be used for cordova builds
+      sudo apt-get install -y apt-transport-https ca-certificates
+      sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+      echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
+      sudo apt-get update
+      sudo apt-get install -y docker-engine
+      sudo usermod -aG docker $USER
+
+      sudo service docker start
+
+      git clone https://github.com/oren/docker-cordova.git
+      cd docker-cordova
+      docker build -t cordova .
+      echo "alias cordova='docker run --rm -i -v /vagrant/tenthousandpoints/:/workspace -w /workspace --privileged cordova cordova'" >> $HOME/.bashrc
+
       # Use forever-service to start and stop node in the background
       sudo npm install -g forever
       sudo npm install -g forever-service
@@ -82,7 +97,7 @@ Vagrant.configure("2") do |config|
       cd /vagrant
       sudo forever-service install tenthousandpoints
 
-      npm install
+      sudo npm install
       sudo service tenthousandpoints start
   SHELL
 end

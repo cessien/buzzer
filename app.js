@@ -9,6 +9,7 @@ var app = express()
 
 app.use('/js', express.static(__dirname + '/src/static/js'));
 app.use('/css', express.static(__dirname + '/src/static/css'));
+app.use('/svg', express.static(__dirname + '/src/static/svg'));
 
 app.use(function(req, res, next) {
   return res.sendFile(__dirname + '/src/static/index.html');

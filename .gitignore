@@ -39,3 +39,7 @@ jspm_packages
 babel_cache
 
 .vagrant
+
+scripts/android-sdk-linux/*
+scripts/android-sdk_*.tgz
+tenthousandpoints/gradle/*
