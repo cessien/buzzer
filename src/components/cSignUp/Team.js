@@ -29,6 +29,17 @@ class Team extends React.Component {
               </InfoCard>
             </Col>
           </Row>
+          <Row>
+            <Col xs={12}>
+              <InfoCard
+                avatar='group-1'
+                title='Profile Information'
+                subtitle='Enter you basic info'
+              >
+                <p>La la la la la</p>
+              </InfoCard>
+            </Col>
+          </Row>
         </Grid>
     );
   }

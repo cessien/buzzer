@@ -80,19 +80,21 @@ Vagrant.configure("2") do |config|
       echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
       sudo apt-get update
       sudo apt-get install -y docker-engine
-      sudo usermod -aG docker $USER
+      sudo groupadd docker
+      sudo usermod -aG docker ubuntu
 
       sudo service docker start
 
       git clone https://github.com/oren/docker-cordova.git
       cd docker-cordova
       docker build -t cordova .
-      echo "alias cordova='docker run --rm -i -t -v /vagrant/tenthousandpoints/:/workspace -w /workspace --privileged cordova cordova'" >> $HOME/.bashrc
-      echo "alias rake='/vagrant/scripts/rake.pl'" >> $HOME/.bashrc
+      echo "alias cordova='docker run --rm -i -t -v /vagrant/tenthousandpoints/:/workspace -w /workspace --privileged cordova cordova' \n alias drun='docker run --rm -i -t -v /vagrant/tenthousandpoints/:/workspace -w /workspace --privileged cordova bash' \n alias rake='/vagrant/scripts/rake.pl'" >> /home/ubuntu/.bash_aliases
 
       # Use forever-service to start and stop node in the background
       sudo npm install -g forever
       sudo npm install -g forever-service
+
+      sudo npm install -g webpack
 
       # Start the node server on 8080
       cd /vagrant

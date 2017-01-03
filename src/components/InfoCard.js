@@ -9,9 +9,7 @@ class InfoCard extends React.Component {
     return (
       <Card>
         <CardHeader
-          avatar={"/svg/" + this.props.avatar + ".svg"}
-        />
-        <CardTitle
+          avatar={"/static/svg/" + this.props.avatar + ".svg"}
           title={this.props.title}
           subtitle={this.props.subtitle}
         />

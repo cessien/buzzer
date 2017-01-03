@@ -42771,9 +42771,7 @@
 	        _Card.Card,
 	        null,
 	        _react2.default.createElement(_Card.CardHeader, {
-	          avatar: "/svg/" + this.props.avatar + ".svg"
-	        }),
-	        _react2.default.createElement(_Card.CardTitle, {
+	          avatar: "/static/svg/" + this.props.avatar + ".svg",
 	          title: this.props.title,
 	          subtitle: this.props.subtitle
 	        }),
@@ -44059,6 +44057,27 @@
 	              _InfoCard2.default,
 	              {
 	                avatar: 'basketball-jersey',
+	                title: 'Profile Information',
+	                subtitle: 'Enter you basic info'
+	              },
+	              _react2.default.createElement(
+	                'p',
+	                null,
+	                'La la la la la'
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactFlexboxGrid.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactFlexboxGrid.Col,
+	            { xs: 12 },
+	            _react2.default.createElement(
+	              _InfoCard2.default,
+	              {
+	                avatar: 'group-1',
 	                title: 'Profile Information',
 	                subtitle: 'Enter you basic info'
 	              },
