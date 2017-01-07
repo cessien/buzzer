@@ -17,11 +17,10 @@ class Payment extends React.Component {
       fontSize: '20px',
       color: '#757575'
     };
-    
+
 		return (
-
+      <div></div>
 		);
-
 	}
 }
 

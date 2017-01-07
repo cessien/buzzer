@@ -45,18 +45,18 @@
     "material-ui": "^0.16.6",
     "moment": "^2.15.2",
     "radium": "^0.18.1",
-    "react": "^15.3.2",
+    "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-animations": "^0.1.0",
     "react-bootstrap": "^0.30.7",
     "react-bracket": "0.0.4",
     "react-burger-menu": "^1.10.10",
     "react-center": "^1.1.1",
-    "react-dom": "^15.3.2",
+    "react-dom": "^15.4.2",
     "react-flexbox-grid": "^0.10.2",
     "react-motion-menu": "^0.2.2",
     "react-notification": "^6.3.0",
     "react-router": "^2.6.1",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-tap-event-plugin": "^2.0.0"
   }
 }

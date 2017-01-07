@@ -10,6 +10,8 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Checkbox from 'material-ui/Checkbox';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 class Team extends React.Component {
   render() {
@@ -79,6 +81,22 @@ class Team extends React.Component {
               >
                 <p>La la la la la</p>
               </InfoCard>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <FlatButton
+                label="Back"
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+            </Col>
+            <Col xs={6}>
+              <RaisedButton
+                label="Next"
+                primary={true}
+                onTouchTap={this.handleNext}
+              />
             </Col>
           </Row>
         </Grid>
