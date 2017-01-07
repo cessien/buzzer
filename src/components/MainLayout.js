@@ -64,7 +64,7 @@ class MainLayout extends React.Component {
               <Avatar size={80} style={{padding: '20px'}}>CE</Avatar>
             </MenuItem>
             <MenuItem onTouchTap={() => this.handlePage('/user/profile')}>Profile</MenuItem>
-            <MenuItem onTouchTap={() => this.handlePage('/login')}>My Team</MenuItem>
+            <MenuItem onTouchTap={() => this.handlePage('/signup/teams')}>My Team</MenuItem>
           </Drawer>
         <div className="app-content">{this.props.children}</div>
       </main>

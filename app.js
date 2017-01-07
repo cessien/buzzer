@@ -4,12 +4,13 @@ var Router = require('react-router')
 var fs = require("fs")
 var https = require('https')
 var http = require('http')
+var path = require('path')
 
 var app = express()
 
-app.use('/static/js', express.static(__dirname + '/src/static/js'));
-app.use('/static/css', express.static(__dirname + '/src/static/css'));
-app.use('/static/svg', express.static(__dirname + '/src/static/svg'));
+app.use('/static/js', express.static(path.resolve(path.join(__dirname,'/src/static/js'))));
+app.use('/static/css', express.static(path.resolve(path.join(__dirname,'/src/static/css'))));
+app.use('/static/svg', express.static(path.resolve(path.join(__dirname,'/src/static/svg'))));
 
 app.use(function(req, res, next) {
   return res.sendFile(__dirname + '/src/static/index.html');

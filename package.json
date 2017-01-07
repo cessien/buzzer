@@ -4,7 +4,7 @@
   "description": "tournament brackets manager",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js > /var/log/tenthousandpoints_server.log 2>&1"
+    "start": "node app.js"
   },
   "engines": {
     "node": ">=0.10.25"
@@ -46,6 +46,7 @@
     "moment": "^2.15.2",
     "radium": "^0.18.1",
     "react": "^15.3.2",
+    "react-addons-css-transition-group": "^15.4.2",
     "react-animations": "^0.1.0",
     "react-bootstrap": "^0.30.7",
     "react-bracket": "0.0.4",
