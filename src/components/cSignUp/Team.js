@@ -12,6 +12,11 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import {
+  Step,
+  Stepper,
+  StepLabel,
+} from 'material-ui/Stepper';
 
 class Team extends React.Component {
   render() {
@@ -20,12 +25,27 @@ class Team extends React.Component {
       color: '#757575'
     };
 
+    const labelStyle = {
+      color: 'rgba(255,255,255,128)'
+    };
+
     return (
         <Grid>
           <AppBar
             title="Buzzer"
             iconElementRight={<IconButton><MoreVertIcon /></IconButton>}
             onLeftIconButtonTouchTap={() => this.updateDrawer()} />
+            <Stepper activeStep={1}>
+              <Step>
+                <StepLabel style={labelStyle}>Profile Information</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel style={labelStyle}>Choose a Team</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel style={labelStyle}>Make a Payment</StepLabel>
+              </Step>
+            </Stepper>
           <Row>
             <Col xs={12}>
               <InfoCard
